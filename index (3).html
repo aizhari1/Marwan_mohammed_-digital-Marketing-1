@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marwan Abdo · marketing</title>
+  <!-- FONTS -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #0A0A0F;
+      color: #FFFFFF;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* ===== خلفية متحركة ===== */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .bg-gradient {
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      top: -50%;
+      left: -50%;
+      background: conic-gradient(from 0deg, #6E46FF, #00E6C8, #FF6F46, #6E46FF);
+      animation: bgRotate 20s linear infinite;
+      opacity: 0.15;
+      filter: blur(80px);
+    }
+
+    .animated-bg span {
+      position: absolute;
+      display: block;
+      width: 120px;
+      height: 120px;
+      background: rgba(110, 70, 255, 0.1);
+      border-radius: 50%;
+      filter: blur(60px);
+      animation: floatMove 20s infinite alternate ease-in-out;
+    }
+    .animated-bg span:nth-child(2) { top: 15%; left: 10%; width: 400px; height: 400px; background: rgba(0, 230, 200, 0.1); animation: floatMove 30s infinite alternate; }
+    .animated-bg span:nth-child(3) { bottom: 10%; right: 5%; width: 500px; height: 500px; background: rgba(110, 70, 255, 0.15); animation: floatMove2 25s infinite alternate; }
+    .animated-bg i { position: absolute; color: rgba(110, 70, 255, 0.25); font-size: 60px; animation: iconFloat 18s infinite alternate; }
+    .animated-bg i.fa-bullseye { top: 20%; left: 70%; font-size: 90px; }
+    .animated-bg i.fa-chart-line { bottom: 25%; right: 20%; font-size: 100px; }
+    .animated-bg i.fa-rocket { top: 75%; left: 25%; font-size: 80px; }
+
+    @keyframes bgRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes floatMove { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(100px, -80px) scale(1.3); } }
+    @keyframes floatMove2 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(-150px, 100px) scale(1.4); } }
+    @keyframes iconFloat { 0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.2; } 100% { transform: translateY(-80px) rotate(15deg) scale(1.4); opacity: 0.4; } }
+
+    /* ===== هيدر ثابت مع لوجو ===== */
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 12px 30px;
+      background: rgba(10, 10, 15, 0.6);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(110, 70, 255, 0.25);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    }
+
+    .logo img {
+      height: 55px;
+      width: auto;
+      display: block;
+      filter: drop-shadow(0 0 10px rgba(110, 70, 255, 0.4));
+    }
+
+    /* ===== أيقونة واتساب عائمة ===== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 100px;
+      left: 30px;
+      z-index: 999;
+      width: 65px;
+      height: 65px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 35px;
+      box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+      text-decoration: none;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+
+    /* ===== HERO - الصورة الشخصية بدون إطار ===== */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      padding: 140px 80px 80px;
+      display: flex;
+      flex-direction: column;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 60px;
+      flex-wrap: wrap;
+    }
+    .hero-text .tagline { font-size: 14px; color: #6E46FF; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 20px; }
+    .hero-text h1 { font-size: 64px; font-weight: 800; line-height: 1.1; background: linear-gradient(135deg, #FFFFFF, #C0B0FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 25px; }
+    
+    /* الصورة الشخصية - بدون إطار نهائياً */
+    .hero-img {
+      width: 350px;
+      height: 350px;
+      overflow: hidden;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      animation: float 6s infinite alternate;
+    }
+    .hero-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    @keyframes float { 0% { transform: translateY(0); } 100% { transform: translateY(-15px); } }
+
+    /* ===== SECTIONS ===== */
+    .section { padding: 100px 80px; position: relative; background: transparent; }
+    .section h2 { font-size: 42px; margin-bottom: 60px; text-align: center; font-weight: 700; position: relative; opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .section.show h2 { opacity: 1; transform: translateY(0); }
+    .section h2:after { content: ''; display: block; width: 80px; height: 4px; background: #6E46FF; margin: 15px auto 0; border-radius: 4px; }
+
+    /* ===== بطاقات المشاريع - كلها قابلة لوضع URL خارجي ===== */
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .project-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      overflow: hidden;
+      border: 1px solid rgba(110, 70, 255, 0.2);
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .section.show .project-card { opacity: 1; transform: scale(1); }
+    
+    /* كل صور المشاريع - جاهزة لاستقبال URL */
+    .project-image {
+      width: 100%;
+      height: 240px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-bottom: 2px dashed #6E46FF;
+      background-image: var(--img-url, none);
+    }
+    
+    /* كل البطاقات تستخدم خاصية الـ custom property عشان نحط الـ URL */
+    .project-card:nth-child(1) .project-image { --img-url: url(''); }
+    .project-card:nth-child(2) .project-image { --img-url: url(''); }
+    .project-card:nth-child(3) .project-image { --img-url: url(''); }
+    .project-card:nth-child(4) .project-image { --img-url: url(''); }
+
+    .project-content { padding: 25px 20px; text-align: center; }
+    .project-content h3 { font-size: 22px; margin-bottom: 8px; color: #fff; }
+    .project-content p { opacity: 0.7; font-size: 15px; margin-bottom: 15px; }
+
+    /* ===== الخدمات ===== */
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .service-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      padding: 40px 30px;
+      border: 1px solid rgba(110, 70, 255, 0.2);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .section.show .service-card { opacity: 1; transform: translateY(0); }
+    .service-card i { font-size: 48px; color: #6E46FF; margin-bottom: 25px; background: rgba(110, 70, 255, 0.1); padding: 20px; border-radius: 20px; }
+
+    /* ===== الباقات ===== */
+    .packages {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .package-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      padding: 45px 30px;
+      text-align: center;
+      width: 340px;
+      border: 1px solid rgba(110, 70, 255, 0.2);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .section.show .package-card { opacity: 1; transform: translateY(0); }
+    .package-card.highlight { border: 2px solid #6E46FF; background: rgba(110, 70, 255, 0.08); }
+    .package-card:nth-child(1) .price { color: #00e676; }
+    .package-card:nth-child(2) .price { color: #ffd600; }
+    .package-card:nth-child(3) .price { color: #2979ff; }
+    .package-card:nth-child(4) .price { color: #ff1744; }
+    .package-card h3 { font-size: 28px; margin-bottom: 10px; font-weight: 700; }
+    .package-card .price { font-size: 48px; margin: 25px 0 20px; font-weight: 800; }
+    .package-card .price small { font-size: 16px; color: rgba(255,255,255,0.5); font-weight: 400; }
+    .package-features { list-style: none; margin: 25px 0 30px; text-align: right; }
+    .package-features li { padding: 8px 0; font-size: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 8px; }
+    .package-features i { color: #6E46FF; margin-left: 8px; }
+    .package-card button {
+      padding: 14px 35px; font-size: 16px; font-weight: 600; color: white; background: #6E46FF;
+      border: none; border-radius: 40px; cursor: pointer; width: 100%; max-width: 220px;
+    }
+
+    /* ===== آراء العملاء ===== */
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .testimonial-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      padding: 30px;
+      border: 1px solid rgba(110, 70, 255, 0.2);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .section.show .testimonial-card { opacity: 1; transform: translateY(0); }
+    .testimonial-card .client { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+    .testimonial-card .client i { font-size: 40px; color: #6E46FF; background: rgba(110,70,255,0.1); padding: 10px; border-radius: 50%; }
+    .testimonial-card .stars { color: #FFD700; margin: 10px 0; }
+    .testimonial-card p { font-style: italic; opacity: 0.8; }
+
+    /* ===== الأسئلة الشائعة ===== */
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 20px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .faq-item {
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(5px);
+      border-radius: 20px;
+      padding: 25px;
+      border: 1px solid rgba(110, 70, 255, 0.15);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .section.show .faq-item { opacity: 1; transform: translateY(0); }
+    .faq-item h3 { color: #6E46FF; margin-bottom: 10px; font-size: 18px; display: flex; align-items: center; gap: 10px; }
+    .faq-item p { opacity: 0.7; }
+
+    /* ===== قسم التواصل ===== */
+    .contact-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 50px;
+      max-width: 1300px;
+      margin: 0 auto;
+      justify-content: center;
+    }
+    .contact-info {
+      flex: 1;
+      min-width: 300px;
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: blur(10px);
+      border-radius: 40px;
+      padding: 40px;
+      border: 1px solid rgba(110,70,255,0.2);
+    }
+    .contact-info .big-whatsapp {
+      display: inline-block;
+      background: #25D366;
+      color: white;
+      padding: 18px 40px;
+      border-radius: 60px;
+      font-size: 24px;
+      text-decoration: none;
+      margin: 20px 0;
+      font-weight: 600;
+    }
+    .contact-form {
+      flex: 1;
+      min-width: 300px;
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: blur(10px);
+      border-radius: 40px;
+      padding: 40px;
+      border: 1px solid rgba(110,70,255,0.2);
+    }
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(110,70,255,0.3);
+      border-radius: 15px;
+      color: white;
+      font-family: inherit;
+    }
+    .contact-form button {
+      background: #6E46FF;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 40px;
+      font-size: 18px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .phone-email {
+      margin: 20px 0;
+      font-size: 18px;
+      direction: ltr;
+      text-align: left;
+    }
+    .phone-email i { margin-left: 10px; color: #6E46FF; }
+
+    /* ===== iOS BOTTOM BAR ===== */
+    .iphone-bottom-bar {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10000;
+      background: rgba(30, 30, 40, 0.4);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-radius: 40px;
+      padding: 8px 30px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+      display: flex;
+      gap: 35px;
+      align-items: center;
+    }
+    .iphone-bottom-bar a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 500;
+      gap: 4px;
+    }
+    .iphone-bottom-bar a i { font-size: 24px; }
+    .iphone-bottom-bar a.active { color: #6E46FF; }
+    .iphone-bottom-bar a.active::after { content: ''; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: #6E46FF; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: rgba(6, 8, 17, 0.7);
+      backdrop-filter: blur(12px);
+      text-align: center;
+      padding: 60px 20px 40px;
+      border-top: 1px solid rgba(110, 70, 255, 0.3);
+    }
+    .social-links a { color: #fff; font-size: 24px; margin: 0 15px; display: inline-block; }
+
+    /* Responsive */
+    @media (max-width: 1000px) {
+      .hero { padding: 120px 40px 60px; }
+      .hero-text h1 { font-size: 48px; }
+      .section { padding: 60px 40px; }
+      .iphone-bottom-bar { gap: 20px; padding: 8px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- خلفية متحركة -->
+<div class="animated-bg">
+  <div class="bg-gradient"></div>
+  <span></span><span></span><span></span>
+  <i class="fas fa-bullseye"></i>
+  <i class="fas fa-chart-line"></i>
+  <i class="fas fa-rocket"></i>
+</div>
+
+<!-- هيدر -->
+<header>
+  <div class="logo">
+    <img src="/T401763465712619.png" alt="Marwan Logo">
+  </div>
+</header>
+
+<!-- واتساب عائم -->
+<a href="https://wa.me/201116180175" class="whatsapp-float" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- HERO - الصورة الشخصية بدون إطار -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="tagline">✦ MARWAN ABDO</div>
+      <h1>Digital Execution<br>& marwan abdo</h1>
+      <p>Data‑driven campaigns · brand scaling · performance marketing · Web3 integration</p>
+    </div>
+    <div class="hero-img">
+      <!-- هتحط هنا رابط الصورة بتاعتك -->
+      <img src="/1771163795168.png" alt="Marwan Abdo">
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS - كل المشاريع جاهزة لاستقبال URL -->
+<section class="section" id="projects">
+  <h2> مشاريعي السابقة</h2>
+  <div class="projects">
+    <!-- المشروع 1 -->
+    <div class="project-card">
+      <div class="project-image" style="background-image: url('/Picsart_26-02-09_16-24-31-930.jpg');"></div>
+      <div class="project-content">
+        <h3>مشروع مرسيدس  - دبي</h3>
+        <p>حملة تسويق رقمي حققت 210% نمو</p>
+      </div>
+    </div>
+    <!-- المشروع 2 -->
+    <div class="project-card">
+      <div class="project-image" style="background-image: url('/1768815873660.jpg');"></div>
+      <div class="project-content">
+        <h3>متجر عسل - مصر</h3>
+        <p> هوايه بصرية كاملة</p>
+      </div>
+    </div>
+    <!-- المشروع 3 -->
+    <div class="project-card">
+      <div class="project-image" style="background-image: url('/Picsart_25-12-06_10-22-47-433.jpg');"></div>
+      <div class="project-content">
+        <h3>كامبين طبي -مصر</h3>
+        <p>إستراتيجية محتوى • تسريع البيع 40%</p>
+      </div>
+    </div>
+    <!-- المشروع 4 -->
+    <div class="project-card">
+      <div class="project-image" style="background-image: url('/1771163795168.png');"></div>
+      <div class="project-content">
+        <h3>مشروع noortart - امريكا</h3>
+        <p>ادارة الحملات التسويقية</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <h2>⚡ الخدمات التي أقدمها</h2>
+  <div class="services">
+    <div class="service-card"><i class="fas fa-magnifying-glass-chart"></i><h3>تحسين محركات البحث</h3><p>تدقيق تقني، محتوى استراتيجي، روابط خارجية</p></div>
+    <div class="service-card"><i class="fas fa-bullseye"></i><h3>إدارة إعلانات جوجل</h3><p>بحث، شبكة عرض، PMax – لأعلى عائد</p></div>
+    <div class="service-card"><i class="fab fa-facebook"></i><i class="fab fa-instagram" style="margin-right: 6px;"></i><h3>استراتيجية وسائل التواصل</h3><p>مدفوعة وعضوية، تفاعل، محتوى إبداعي</p></div>
+    <div class="service-card"><i class="fas fa-brush"></i><h3>الهوية والعلامة التجارية</h3><p>هوية بصرية، نبرة صوت، تموضع في السوق</p></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <h2>📦 باقات الاشتراك الشهري</h2>
+  <div class="packages">
+    <div class="package-card"><h3>🚀 باقة البداية</h3><div class="price">3000 <small>جنيه</small></div><ul class="package-features"><li><i class="fas fa-check"></i> 8 بوستات شهريًا</li><li><i class="fas fa-check"></i> 2 ريلز</li><li><i class="fas fa-check"></i> كتابة محتوى أساسي</li><li><i class="fas fa-check"></i> إدارة صفحة واحدة</li><li><i class="fas fa-check"></i> تصميمات ثابتة</li><li><i class="fas fa-check"></i> ردود بسيطة على الرسائل</li></ul><button onclick="alert('طلب باقة البداية - تواصل معنا واتساب')"><i class="fas fa-rocket"></i> ابدأ الآن</button></div>
+    <div class="package-card highlight"><h3>📈 باقة النمو</h3><div class="price">6000 <small>جنيه</small></div><ul class="package-features"><li><i class="fas fa-check"></i> 15 بوست</li><li><i class="fas fa-check"></i> 5 ريلز</li><li><i class="fas fa-check"></i> كتابة محتوى تسويقي</li><li><i class="fas fa-check"></i> إدارة صفحتين</li><li><i class="fas fa-check"></i> تصميم احترافي</li><li><i class="fas fa-check"></i> خطة محتوى شهرية</li><li><i class="fas fa-check"></i> تقارير أداء</li><li><i class="fas fa-check"></i> دعم واتساب</li></ul><button onclick="alert('طلب باقة النمو - تواصل معنا واتساب')"><i class="fas fa-chart-line"></i> ابدأ الآن</button></div>
+    <div class="package-card"><h3>🔥 باقة الاحتراف</h3><div class="price">8000 <small>جنيه</small></div><ul class="package-features"><li><i class="fas fa-check"></i> 20 بوست</li><li><i class="fas fa-check"></i> 8 فيديو</li><li><i class="fas fa-check"></i> تصميمات إبداعية</li><li><i class="fas fa-check"></i> كتابة محتوى احترافي</li><li><i class="fas fa-check"></i> إدارة 2-3 صفحات</li><li><i class="fas fa-check"></i> خطة متقدمة</li><li><i class="fas fa-check"></i> تقارير تحليل</li><li><i class="fas fa-check"></i> أفكار حملات</li></ul><button onclick="alert('طلب باقة الاحتراف - تواصل معنا واتساب')"><i class="fas fa-crown"></i> ابدأ الآن</button></div>
+    <div class="package-card"><h3>💎 باقة البريميوم</h3><div class="price">10000 <small>جنيه</small></div><ul class="package-features"><li><i class="fas fa-check"></i> 25 بوست</li><li><i class="fas fa-check"></i> 12 فيديو</li><li><i class="fas fa-check"></i> تصوير احترافي</li><li><i class="fas fa-check"></i> مونتاج</li><li><i class="fas fa-check"></i> إدارة كاملة</li><li><i class="fas fa-check"></i> إعلانات ممولة</li><li><i class="fas fa-check"></i> تحليل بيانات</li><li><i class="fas fa-check"></i> مدير حساب</li><li><i class="fas fa-check"></i> دعم يومي</li></ul><button onclick="alert('طلب باقة البريميوم - تواصل معنا واتساب')"><i class="fas fa-star"></i> ابدأ الآن</button></div>
+  </div>
+</section>
+
+<!-- آراء العملاء -->
+<section class="section" id="testimonials">
+  <h2>💬 آراء العملاء</h2>
+  <div class="testimonials">
+    <div class="testimonial-card"><div class="client"><i class="fas fa-user-circle"></i> <h3>أكاديمية الإتقان</h3></div><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>"زيادة عدد الطلاب بسبب استراتيجيات  الاعلانات والمحتوي جزاكم الله خيرا
+    "</p></div>
+    <div class="testimonial-card"><div class="client"><i class="fas fa-user-circle"></i> <h3>برنامج تأسيس</h3></div><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>"حياكم الله نشكركم علي المجهود المبذول في تطوير محتوي التطبيق"</p></div>
+    <div class="testimonial-card"><div class="client"><i class="fas fa-user-circle"></i> <h3>خالد العمري</h3></div><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div><p>"التقارير الشهرية واضحة والأداء مذهل. استمروا!"</p></div>
+  </div>
+</section>
+
+<!-- الأسئلة الشائعة -->
+<section class="section" id="faq">
+  <h2>❓ الأسئلة الشائعة</h2>
+  <div class="faq-grid">
+    <div class="faq-item"><h3><i class="fas fa-question-circle"></i> كم مدة العقد؟</h3><p>العقود شهرية ويمكن تجديدها أو إلغاؤها في أي وقت.</p></div>
+    <div class="faq-item"><h3><i class="fas fa-question-circle"></i> هل يوجد دعم فني؟</h3><p>نعم، دعم واتساب يومي في الباقات المدفوعة.</p></div>
+    <div class="faq-item"><h3><i class="fas fa-question-circle"></i> ماذا تشمل الإعلانات الممولة؟</h3><p>إدارة الحملات على فيسبوك وانستجرام بميزانية منفصلة.</p></div>
+    <div class="faq-item"><h3><i class="fas fa-question-circle"></i> هل يمكن تخصيص باقة؟</h3><p>نعم، تواصل معنا لتصميم باقة تناسب احتياجك.</p></div>
+  </div>
+</section>
+
+<!-- قسم التواصل -->
+<section class="section" id="contact">
+  <h2>📬 تواصل معي</h2>
+  <div class="contact-section">
+    <div class="contact-info">
+      <h3>معلومات الاتصال</h3>
+      <div class="phone-email"><i class="fas fa-phone"></i> 01116180175</div>
+      <div class="phone-email"><i class="fas fa-envelope"></i> marwanmabdoabdo@gmail.com</div>
+      <a href="https://wa.me/201116180175" class="big-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> واتساب مباشر</a>
+      <p style="margin-top: 20px;">أو املأ النموذج وسأعود إليك في أقرب وقت</p>
+    </div>
+    <div class="contact-form">
+      <form onsubmit="event.preventDefault(); alert('تم ارسال الرسالة شكراً لك');">
+        <input type="text" placeholder="الاسم" required>
+        <input type="email" placeholder="البريد الإلكتروني" required>
+        <input type="tel" placeholder="رقم الهاتف">
+        <textarea rows="4" placeholder="رسالتك..."></textarea>
+        <button type="submit">إرسال</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="social-links">
+    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    <a href="#"><i class="fab fa-x-twitter"></i></a>
+    <a href="#"><i class="fab fa-instagram"></i></a>
+    <a href="#"><i class="fab fa-behance"></i></a>
+  </div>
+  <p>© 2026 Marwan Abdo – التنفيذ الرقمي المتقن</p>
+  <p style="margin-top: 12px;">📧 marwanmabdoabdo@gmail.com  ·  📞 01116180175</p>
+</footer>
+
+<!-- iOS BOTTOM BAR -->
+<div class="iphone-bottom-bar">
+  <a href="#home" class="active"><i class="fas fa-home"></i><span>Home</span></a>
+  <a href="#projects"><i class="fas fa-rss"></i><span>Feed</span></a>
+  <a href="#services"><i class="fas fa-search"></i><span>Search</span></a>
+  <a href="#pricing"><i class="fas fa-cog"></i><span>Settings</span></a>
+</div>
+
+<!-- سكربت -->
+<script>
+  (function() {
+    const sections = document.querySelectorAll('.section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('show'); });
+    }, { threshold: 0.2 });
+    sections.forEach(section => observer.observe(section));
+
+    const barLinks = document.querySelectorAll('.iphone-bottom-bar a');
+    function setActiveLink() {
+      const fromTop = window.scrollY + 150;
+      const sectionsMap = {
+        '#home': document.getElementById('home'),
+        '#projects': document.getElementById('projects'),
+        '#services': document.getElementById('services'),
+        '#pricing': document.getElementById('pricing')
+      };
+      let currentId = '';
+      for (let [id, section] of Object.entries(sectionsMap)) {
+        if (section && section.offsetTop <= fromTop && section.offsetTop + section.offsetHeight > fromTop) currentId = id;
+      }
+      barLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === currentId) link.classList.add('active');
+      });
+    }
+    window.addEventListener('scroll', setActiveLink);
+    window.addEventListener('load', setActiveLink);
+
+    barLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetEl = document.querySelector(link.getAttribute('href'));
+        if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  })();
+</script>
+</body>
+</html>
